@@ -99,12 +99,12 @@ def main(args):
             # Decay the learning rate
             learning_rate = args.learning_rate * decay_factor
         
-        print 'Learning Rate for Epoch %d: %.6f'%( epoch, learning_rate )
+        print ('Learning Rate for Epoch %d: %.6f'%( epoch, learning_rate ))
 
         optimizer = torch.optim.Adam( params, lr=learning_rate, betas=( args.alpha, args.beta ) )
 
         # Language Modeling Training
-        print '------------------Training for Epoch %d----------------'%( epoch )
+        print ('------------------Training for Epoch %d----------------'%( epoch ))
         for i, (images, captions, lengths, _, _ ) in enumerate( data_loader ):
 
             # Set mini-batch dataset
@@ -136,11 +136,11 @@ def main(args):
 
             # Print log info
             if i % args.log_step == 0:
-                print 'Epoch [%d/%d], Step [%d/%d], CrossEntropy Loss: %.4f, Perplexity: %5.4f'%( epoch, 
+                print ('Epoch [%d/%d], Step [%d/%d], CrossEntropy Loss: %.4f, Perplexity: %5.4f'%( epoch, 
                                                                                                  args.num_epochs, 
                                                                                                  i, total_step, 
-                                                                                                 loss.data[0],
-                                                                                                 np.exp( loss.data[0] ) )  
+                                                                                                 loss.item(),
+                                                                                                 np.exp( loss.item() ) ) ) 
                 
         # Save the Adaptive Attention model after each epoch
         torch.save( adaptive.state_dict(), 
@@ -164,8 +164,8 @@ def main(args):
             # Test if there is improvement, if not do early stopping
             if last_6_max != best_cider:
                 
-                print 'No improvement with CIDEr in the last 6 epochs...Early stopping triggered.'
-                print 'Model of best epoch #: %d with CIDEr score %.2f'%( best_epoch, best_cider )
+                print ('No improvement with CIDEr in the last 6 epochs...Early stopping triggered.')
+                print ('Model of best epoch #: %d with CIDEr score %.2f'%( best_epoch, best_cider ))
                 break
             
             
@@ -218,7 +218,7 @@ if __name__ == '__main__':
     
     # Training details
     parser.add_argument( '--pretrained', type=str, default='', help='start from checkpoint or scratch' )
-    parser.add_argument( '--num_epochs', type=int, default=50 )
+    parser.add_argument( '--num_epochs', type=int, default=1 )
     parser.add_argument( '--batch_size', type=int, default=60 ) # on cluster setup, 60 each x 4 for Huckle server
     
     # For eval_size > 30, it will cause cuda OOM error on Huckleberry
@@ -231,7 +231,7 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     
-    print '------------------------Model and Training Details--------------------------'
+    print ('------------------------Model and Training Details--------------------------')
     print(args)
     
     # Start training

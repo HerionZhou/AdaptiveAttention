@@ -8,8 +8,8 @@ import pickle
 from build_vocab import Vocabulary
 from torch.autograd import Variable 
 from torchvision import transforms, datasets
-from coco.pycocotools.coco import COCO
-from coco.pycocoevalcap.eval import COCOEvalCap
+from pycocotools.coco import COCO
+from pycocoevalcap.eval import COCOEvalCap
 import matplotlib.pyplot as plt
 
 # Variable wrapper
@@ -125,7 +125,7 @@ def coco_eval( model, args, epoch ):
     
     # Generated captions to be compared with GT
     results = []
-    print '---------------------Start evaluation on MS-COCO dataset-----------------------'
+    print ('---------------------Start evaluation on MS-COCO dataset-----------------------')
     for i, (images, image_ids, _ ) in enumerate( eval_data_loader ):
         
         images = to_var( images )
@@ -157,10 +157,10 @@ def coco_eval( model, args, epoch ):
         
         # Disp evaluation process
         if (i+1) % 10 == 0:
-            print '[%d/%d]'%( (i+1),len( eval_data_loader ) ) 
+            print ('[%d/%d]'%( (i+1),len( eval_data_loader ) ) )
             
             
-    print '------------------------Caption Generated-------------------------------------'
+    print ('------------------------Caption Generated-------------------------------------')
             
     # Evaluate the results based on the COCO API
     resFile = 'results/mixed-' + str( epoch ) + '.json'
@@ -176,10 +176,10 @@ def coco_eval( model, args, epoch ):
     
     # Get CIDEr score for validation evaluation
     cider = 0.
-    print '-----------Evaluation performance on MS-COCO validation dataset for Epoch %d----------'%( epoch )
+    print ('-----------Evaluation performance on MS-COCO validation dataset for Epoch %d----------'%( epoch ))
     for metric, score in cocoEval.eval.items():
         
-        print '%s: %.4f'%( metric, score )
+        print ('%s: %.4f'%( metric, score ))
         if metric == 'CIDEr':
             cider = score
             

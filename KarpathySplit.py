@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # # Karpathy Split for MS-COCO Dataset
@@ -10,8 +9,8 @@ seed( 123 ) # Make it reproducible
 num_val = 5000
 num_test = 5000
 
-val = json.load( open('annotations/captions_val2014.json', 'r') )
-train = json.load( open('annotations/captions_train2014.json', 'r') )
+val = json.load( open('data/annotations/captions_val2014.json', 'r') )
+train = json.load( open('data/annotations/captions_train2014.json', 'r') )
 
 # Merge together
 imgs = val['images'] + train['images']
@@ -52,5 +51,4 @@ for subset in split:
         json_data[ subset ]['images'].append( img )
         json_data[ subset ]['annotations'].extend( anns )
         
-    json.dump( json_data[ subset ], open( 'annotations/karpathy_split_' + subset + '.json', 'w' ) )
-
+    json.dump( json_data[ subset ], open( 'data/annotations/karpathy_split_' + subset + '.json', 'w' ) )
